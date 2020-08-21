@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
     <title>Consultar Código de Área</title>
@@ -24,7 +25,7 @@
                                         <div class="form-row">
                                             <div class="col-md">
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="DDD">Código de Área ou Estado</label>
+                                                    <label class="small mb-1" for="DDD">Código de Área</label>
                                                     <h:inputText styleClass="form-control py-4"
                                                                  id="DDD"
                                                                  value="#{indexController.consulta}"/>
@@ -34,6 +35,8 @@
                                         <div class="form-group mt-4 mb-0">
                                             <h:commandButton styleClass="btn btn-primary btn-block"
                                                              value="Consultar"
+                                                             onclick="document.getElementById('loading').style.display='block'"
+                                                             pt:data-target="loading"
                                                              actionListener="#{indexController.buscarRegiao()}">
                                                 <f:ajax execute="@form" render="retorno"/>
                                             </h:commandButton>
@@ -46,10 +49,11 @@
                                              value="#{indexController.codigoAreas}"
                                              var="ca" width="100%">
                                     <h:column>
-                                        <h:dataTable styleClass="table thead-dark" var="regiao" value="#{ca.regiao}" width="100%">
+                                        <h:dataTable styleClass="table thead-dark" var="regiao" value="#{ca.regiao}"
+                                                     width="100%">
                                             <f:facet name="header">#{ca.estado} / #{ca.ddd}</f:facet>
                                             <h:column>
-                                                <h:outputLabel value="#{regiao}" />
+                                                <h:outputLabel value="#{regiao}"/>
                                             </h:column>
                                         </h:dataTable>
                                     </h:column>
@@ -63,7 +67,7 @@
                 </div>
             </main>
         </div>
-        <br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <div id="layoutAuthentication_footer">
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -82,5 +86,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
             crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+
+    <div style="position: fixed;
+                display: none;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(10,23,55,0.5);"
+    id="loading">
+
+        <img style="position: absolute;
+             top: 50%;
+             left: 50%;
+             margin-right: -50%;
+             transform: translate(-50%, -50%);"
+             src="resouces/load.gif"/>
+
+    </div>
 </h:body>
 </html>

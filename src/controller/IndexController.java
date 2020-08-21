@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import model.CodigoArea;
-import org.json.simple.JSONObject;
+import org.jboss.weld.context.RequestContext;
+import org.primefaces.PrimeFaces;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @ViewScoped
@@ -20,8 +20,8 @@ public class IndexController implements Serializable {
 
     private static final long serialVersionUID = -2701110827897445334L;
 
-    String consulta;
-    List<CodigoArea> codigoAreas = new ArrayList<>();
+    private String consulta;
+    private List<CodigoArea> codigoAreas = new ArrayList<>();
 
 
     public void buscarRegiao() {
@@ -30,6 +30,7 @@ public class IndexController implements Serializable {
         WebResource wr = client.resource("http://localhost:8080/API-1.0-SNAPSHOT/srcascudo/" + getConsulta());
         Gson gson = new Gson();
         getCodigoAreas().add(gson.fromJson(wr.get(String.class), CodigoArea.class));
+        PrimeFaces.current().executeScript("document.getElementById('loading').style.display='none'");
     }
 
     public String getConsulta() {
