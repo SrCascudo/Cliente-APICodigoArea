@@ -27,7 +27,7 @@ public class IndexController implements Serializable {
     public void buscarRegiao() {
         setCodigoAreas(new ArrayList<>());
         Client client = Client.create();
-        WebResource wr = client.resource("http://localhost:8080/API-1.0-SNAPSHOT/srcascudo/" + getConsulta());
+        WebResource wr = client.resource("https://api-codigoarea.herokuapp.com/srcascudo/" + getConsulta());
         Gson gson = new Gson();
         getCodigoAreas().add(gson.fromJson(wr.get(String.class), CodigoArea.class));
         PrimeFaces.current().executeScript("document.getElementById('loading').style.display='none'");
